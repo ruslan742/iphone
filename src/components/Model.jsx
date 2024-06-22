@@ -8,6 +8,7 @@ import * as THREE from "three";
 import { Canvas } from "@react-three/fiber";
 import { View } from "@react-three/drei";
 import { models, sizes } from "../constants";
+import { animateWithGsapTimeLine } from "../utils/animations";
 export default function Model() {
   const [size, setSize] = useState("small");
   const [model, setModel] = useState({
@@ -22,16 +23,22 @@ export default function Model() {
   const large = useRef(new THREE.Group());
   const [smallRotation, setSmallRotation] = useState(0);
   const [largeRotation, setLargeRotation] = useState(0);
-  const tl=gsap.timeline()
+  const tl = gsap.timeline();
   useEffect(() => {
-    if(size==='large'){
-
+    if (size === "large") {
+      animateWithGsapTimeLine(tl, small, smallRotation, "#view1", "#view2", {
+        transform: "translateX(-100%)",
+        duration: 2,
+      });
     }
-  if(size==='small'){
-  }
-   
-  }, [size])
-  
+    if (size === "small") {
+      animateWithGsapTimeLine(tl, large, largeRotation, "#view2", "#view1", {
+        transform: "translateX(0)",
+        duration: 2,
+      });
+    }
+  }, [size]);
+
   useGSAP(() => {
     gsap.to("#heading", {
       y: 0,
@@ -87,22 +94,25 @@ export default function Model() {
             <div className="flex-center">
               <ul className="color-container">
                 {models.map((item, i) => (
-                  <li key={i} className="w-6 h-6 rounded-full mx-2 cursor-pointer" style={{ backgroundColor: item.color[0] }}
-                  onClick={()=>setModel(item)}/>
+                  <li
+                    key={i}
+                    className="w-6 h-6 rounded-full mx-2 cursor-pointer"
+                    style={{ backgroundColor: item.color[0] }}
+                    onClick={() => setModel(item)}
+                  />
                 ))}
               </ul>
               <button className="size-btn-container">
-                {sizes.map(({label,value})=>(
-                    <span key={label} className="size-btn"
-                    style={{backgroundColor:size===value?'white':'transparent',
-                    color:size===value?'black':'white'}} onClick={()=>setSize(value)}>
-                        {label}
-
-                    </span>
-                ))
-
-                }
-
+                {sizes.map(({ label, value }) => (
+                  <span
+                    key={label}
+                    className="size-btn"
+                    style={{ backgroundColor: size === value ? "white" : "transparent", color: size === value ? "black" : "white" }}
+                    onClick={() => setSize(value)}
+                  >
+                    {label}
+                  </span>
+                ))}
               </button>
             </div>
           </dir>
