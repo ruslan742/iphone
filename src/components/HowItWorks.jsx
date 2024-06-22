@@ -7,6 +7,14 @@ import { animateWithGsap } from "../utils/animations";
 export default function HowItWorks() {
   const videoRef = useRef();
   useGSAP(() => {
+    gsap.to("#frameVideo", {
+        scrollTrigger: {
+          trigger: "#frameVideo",
+          toggleActions: "play pause play pause",
+          start: "20% bottom",
+        },
+        // onComplete:()=>{videoRef.current.play()}
+      });
     gsap.from("#chip", {
       scrollTrigger: {
         trigger: "#chip",
@@ -43,7 +51,7 @@ export default function HowItWorks() {
               <img src={frameImg} alt="frame" className="bg-transparent relative z-10" />
             </div>
             <div className="hiw-video">
-              <video className="pointer-events-none" playsInline preload="none" muted autoPlay ref={videoRef}>
+              <video className="pointer-events-none" id="frameVideo" playsInline preload="none" muted autoPlay ref={videoRef}>
                 <source src={frameVideo} type="video/mp4" />
               </video>
             </div>
