@@ -8,13 +8,13 @@ export default function HowItWorks() {
   const videoRef = useRef();
   useGSAP(() => {
     gsap.to("#frameVideo", {
-        scrollTrigger: {
-          trigger: "#frameVideo",
-          toggleActions: "play pause play pause",
-          start: "20% bottom",
-        },
-        // onComplete:()=>{videoRef.current.play()}
-      });
+      scrollTrigger: {
+        trigger: "#frameVideo",
+        toggleActions: "play pause reverse restart",
+        start: "20% bottom",
+      },
+      onComplete:()=>{videoRef.current.play()}
+    });
     gsap.from("#chip", {
       scrollTrigger: {
         trigger: "#chip",
@@ -51,7 +51,7 @@ export default function HowItWorks() {
               <img src={frameImg} alt="frame" className="bg-transparent relative z-10" />
             </div>
             <div className="hiw-video">
-              <video className="pointer-events-none" id="frameVideo" playsInline preload="none" muted autoPlay ref={videoRef}>
+              <video className="pointer-events-none" id="frameVideo" playsInline preload="none" muted ref={videoRef}>
                 <source src={frameVideo} type="video/mp4" />
               </video>
             </div>
@@ -59,7 +59,7 @@ export default function HowItWorks() {
           <p className="text-gray font-semibold text-center mt-3">Honkai: Star Rail</p>
         </div>
         <div className="hiw-text-container">
-          <div className="flex flex-1 flex-center flex-col" >
+          <div className="flex flex-1 flex-center flex-col">
             <p className="hiw-text g_fadeIn">
               iPhone 15 Pro is an entirely new class of iPhone chip that delivers our{" "}
               <span className="text-white">best graphic perfomance by far</span>
